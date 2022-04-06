@@ -41,7 +41,7 @@ function App() {
      }}>모달창열기</button>
      {
        modal === true
-       ? <Modal></Modal>
+       ? <Modal 글제목={글제목}></Modal>
        : null
      }
      
@@ -49,10 +49,10 @@ function App() {
 
   );
 }
-function Modal(){
+function Modal(props){
   return(
     <div className='modal'>
-       <h2>제목</h2>
+       <h2>제목 {props.글제목[0]}</h2>
        <p>날짜</p>
        <p>상세나용</p>
      </div>
