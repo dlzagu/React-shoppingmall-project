@@ -5,6 +5,9 @@ function Detail(props) {
     let{id}=useParams();
     let history = useHistory();
     let 찾은상품 = props.상품.find((a)=>{return a.id==id});
+    let 찾은상품2 = props.상품.filter((a)=>{return a.id==id});
+    // find 배열안의 조건에 만족하는 하나의 오브젝트를 배열로 변경  {} <<안남음
+    // filter 배열안의 조건에 만족하지 않는 오브젝트를 삭제 {} << 남음
     return (
         <div className="container">
             <div className="row">
