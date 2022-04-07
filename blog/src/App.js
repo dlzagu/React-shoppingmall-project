@@ -8,6 +8,18 @@ function App() {
   let [따봉개수, 따봉개수변경] = useState([0, 0, 0]);
   let [modal, modalChange] = useState(false);
   let [누른제목, 누른제목변경] = useState(0);
+  let [입력값, 입력값변경] = useState('');
+  let onchange = (e) => 입력값변경(e.target.value);
+  let onsuclick = () => {
+    var 추가된글제목 = [...글제목];
+    var 추가따봉 = [...따봉개수];
+    추가된글제목.unshift(입력값);
+    추가따봉.unshift(0);
+    글제목변경(추가된글제목);
+    따봉개수변경(추가따봉);
+    입력값변경('');
+  
+  }
 
   // function 제목바꾸기(){
   //   var 새로운제목 = [...글제목];
@@ -24,7 +36,7 @@ function App() {
         글제목.map((a, i) => {
 
           return (
-            <div className="list">
+            <div className="list" key={i}>
               <h3 onClick={()=>{modalChange(!modal); 누른제목변경(i)}}> {a}<span onClick={() => {
                 var 새로운따봉개수 = [...따봉개수];
                 새로운따봉개수[i] = 따봉개수[i] + 1
@@ -37,7 +49,10 @@ function App() {
 
         })
       }
-     
+     <div className='publish'>
+     <input onChange={onchange} type={'text'} value={입력값}/>
+     <button onClick={onclick}>저장</button>
+     </div>
       <button onClick={() => {
         modalChange(!modal);
       }}>열고닫기</button>
