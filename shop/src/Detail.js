@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import './Detail.scss';
 
 function Detail(props) {
+    let [modal,modalChange]=useState(true);
+    useEffect(()=>{
+        let 타이머 =setTimeout(()=>modalChange(false),2000);
+        return ()=> {clearTimeout(타이머)} // 혹시 모르는 버그를 제거하기 위해 컴포넌트가 사라질때 타이머 제거 
+    },[]); // [] 페이지 로드 될때 한번만 실행 
     let{id}=useParams();
     let history = useHistory();
     let 찾은상품 = props.상품.find((a)=>{return a.id==id});
@@ -10,6 +16,13 @@ function Detail(props) {
     // filter 배열안의 조건에 만족하지 않는 오브젝트를 삭제 {} << 남음
     return (
         <div className="container">
+            <div className="Detail-title">Detail</div>
+            { 
+            modal === true?
+            <Modal></Modal>
+            :null
+
+            }
             <div className="row">
                 <div className="col-md-6">
                     <img src={찾은상품.이미지주소} width="100%" />
@@ -27,4 +40,7 @@ function Detail(props) {
         </div>
     )
 }
+let Modal = () =>{
+    return <div className="my-alert"><p>재고가 얼마 남지 않았습니다.</p></div>
+} 
 export default Detail;

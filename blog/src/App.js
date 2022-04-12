@@ -10,7 +10,7 @@ function App() {
   let [누른제목, 누른제목변경] = useState(0);
   let [입력값, 입력값변경] = useState('');
   let onchange = (e) => 입력값변경(e.target.value);
-  let onsuclick = () => {
+  let onclick = () => {
     var 추가된글제목 = [...글제목];
     var 추가따봉 = [...따봉개수];
     추가된글제목.unshift(입력값);
