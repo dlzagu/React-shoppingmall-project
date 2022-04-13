@@ -31,7 +31,12 @@ function Detail(props) {
                     <h4 className="pt-5">{찾은상품.title}</h4>
                     <p>{찾은상품.content}</p>
                     <p>{찾은상품.price}</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    <Info 재고={props.재고}/>
+                    <button className="btn btn-danger" onClick={()=>{
+                        let 차감된재고 = [...props.재고]
+                        차감된재고[0]-=1
+                        props.재고변경(차감된재고);
+                    }}>주문하기</button>
                     <button className="btn btn-danger" onClick={()=>{
                         history.goBack();
                     }}>뒤로가기</button>
@@ -42,5 +47,10 @@ function Detail(props) {
 }
 let Modal = () =>{
     return <div className="my-alert"><p>재고가 얼마 남지 않았습니다.</p></div>
-} 
+}
+let Info = (props) =>{
+    return(
+        <p>재고 : {props.재고[0]} </p>
+    )
+}
 export default Detail;

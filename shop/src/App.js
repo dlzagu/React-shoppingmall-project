@@ -4,12 +4,15 @@ import './App.css';
 import Product from './data';
 import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
+import axios from 'axios';
 
 
 function App() {
 
 
   let [상품, 상품변경] = useState(Product);
+  let [loading, loadingChange] = useState(false);
+  let [재고, 재고변경] = useState([10,11,12])
 
 
   return (
@@ -45,16 +48,33 @@ function App() {
               {
                 상품.map((a, i) => {
                   return (
-                    <상품진열 상품={상품[i]} key={i}/>
+                    <상품진열 상품={상품[i]} key={i} />
                   )
                 })
               }
-
             </div>
+            { loading===true
+            ? ()=> {return(
+              <div className="loading">
+              ....loading
+            </div>
+            )}
+            : null
+              
+            }
+            <button className="btn btn-primary" onClick={() => {
+              loadingChange(true);
+              axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((result) => {
+                 상품변경([...상품,...result.data]);
+                 loadingChange(false);
+                })
+                .catch(() => console.log("실패"));
+            }}>더보기</button>
           </div>
         </Route>
         <Route path="/detail/:id">
-          <Detail  상품={상품} />
+          <Detail 상품={상품} 재고={재고} 재고변경={재고변경} />
         </Route>
       </Switch>
     </div>
