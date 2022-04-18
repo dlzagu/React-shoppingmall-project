@@ -21,3 +21,16 @@
     font-size: 15px;
     background-color: white;
 }
+
+
+.btn{
+    margin-right: 7px;
+}
+
+.wow-enter{
+    opacity: 0;
+}
+.wow-enter-active{
+    opacity: 1;
+    transition: all 500ms;
+}

@@ -5,6 +5,7 @@ import Product from './data';
 import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
 import axios from 'axios';
+import Cart from './Cart';
 
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
               {
                 상품.map((a, i) => {
                   return (
-                    <상품진열 상품={상품[i]} key={i} />
+                    <Card 상품={상품[i]} key={i} />
                   )
                 })
               }
@@ -76,11 +77,14 @@ function App() {
         <Route path="/detail/:id">
           <Detail 상품={상품} 재고={재고} 재고변경={재고변경} />
         </Route>
+        <Route path="/cart">
+          <Cart />
+        </Route>
       </Switch>
     </div>
   );
 }
-function 상품진열(props) {
+function Card(props) {
   return (
     <div className='col-md-4'>
       <img src={props.상품.이미지주소} width="100%" />
