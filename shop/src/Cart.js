@@ -34,7 +34,7 @@ function Cart(props) {
       </Table>
       {
         props.alert열렸니?
-        <div className="my-alert2">
+        <div className="my-alert">
           <p>지금 구매하시면 신규할인 20%</p>
           <button onClick={()=>{props.dispatch({type:'닫기'})}}>닫기</button>
         </div>

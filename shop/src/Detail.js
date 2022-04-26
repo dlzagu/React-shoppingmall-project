@@ -3,6 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import {CSSTransition} from 'react-transition-group';
 import './Detail.scss';
+import { connect } from 'react-redux';
+import Cart from './Cart';
 
 
 function Detail(props) {
@@ -38,10 +40,14 @@ function Detail(props) {
                     <p>{찾은상품.content}</p>
                     <p>{찾은상품.price}</p>
                     <Info 재고={props.재고} />
+
                     <button className="btn btn-danger" onClick={() => {
                         let 차감된재고 = [...props.재고]
                         차감된재고[0] -= 1
                         props.재고변경(차감된재고);
+                        props.dispatch({type:'항목추가',payload:{id:찾은상품.id,name:찾은상품.title,quan:1}});
+                        history.push('/cart');
+
                     }}>주문하기</button>
                     <button className="btn btn-danger" onClick={() => {
                         history.goBack();
@@ -82,4 +88,12 @@ function TabContent(props){
         return <div>내용1</div>
       } 
 }
-export default Detail;
+function state를props화(state) {
+  return {
+    state: state.reducer,
+    alert열렸니: state.reducer2
+  }
+}
+
+
+export default connect(state를props화)(Detail);
