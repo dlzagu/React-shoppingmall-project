@@ -27,8 +27,8 @@ function Cart(props) {
                 <td>{a.name}</td>
                 <td>{a.quan}</td>
                 <td>
-                <button onClick ={()=>{dispatch({type:'수량증가'})}}>+</button>
-                <button onClick ={()=>{dispatch({type:'수량감소'})}}>-</button>
+                <button onClick ={()=>{dispatch({type:'수량증가',data:a.id})}}>+</button>
+                <button onClick ={()=>{dispatch({type:'수량감소',data:a.id})}}>-</button>
                 </td>
                 
               </tr>
@@ -48,12 +48,7 @@ function Cart(props) {
     </div>
   )
 }
-function state를props화(state) {
-  return {
-    state: state.reducer,
-    alert열렸니: state.reducer2
-  }
-}
+
 
 
 export default Cart;

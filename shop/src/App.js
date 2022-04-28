@@ -6,6 +6,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './Detail';
 import axios from 'axios';
 import Cart from './Cart';
+import { useHistory } from 'react-router-dom';
 
 
 function App() {
@@ -85,8 +86,9 @@ function App() {
   );
 }
 function Card(props) {
+  let history = useHistory();
   return (
-    <div className='col-md-4'>
+    <div className='col-md-4' onClick={()=>{history.push(history.push(`/detail/${props.상품.id}`))}}>
       <img src={props.상품.이미지주소} width="100%" />
       <h4>{props.상품.title}</h4>
       <p>{props.상품.content} & {props.상품.price}</p>
