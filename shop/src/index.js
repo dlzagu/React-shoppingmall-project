@@ -17,8 +17,7 @@ function reducer2(state = alert초기값,액션){
 }
 
 let 초기값  = [
-  {id : 0, name : '멋진신발', quan : 2},
-  {id : 1, name : '크록스', quan : 1},
+ 
   
 ];
 
@@ -26,8 +25,8 @@ let 초기값  = [
 function reducer (state = 초기값, 액션){
   if(액션.type === '항목추가'){
     let copy = [...state];
-    if(copy.filter(a=> a.name===액션.payload.name).length){
-      copy.find(a=> a.name===액션.payload.name).quan++;
+    if(copy.filter(a=> a.name===액션.payload.name && a.size===액션.payload.size).length){
+      copy.find(a=> a.name===액션.payload.name && a.size ===액션.payload.size).quan++;
     }
     
     else copy.push(액션.payload);
@@ -35,15 +34,20 @@ function reducer (state = 초기값, 액션){
   }
   else if(액션.type === '수량증가'){
     let copy = [...state];
-    copy[액션.data].quan++;
+    copy.find(a=> a.id===액션.data && a.size===액션.size).quan++;
+   
     return copy
   }else if(액션.type === '수량감소'){
     let copy = [...state];
-    if(copy[액션.data].quan>0){
-      copy[액션.data].quan--;
+    if(copy.find(a=> a.id===액션.data && a.size===액션.size).quan>0){
+      copy.find(a=> a.id===액션.data && a.size===액션.size).quan--;
     }
     
     return copy
+  }else if(액션.type ==='삭제'){
+    let copy = [...state];
+    copy.splice(copy.findIndex(a=>a.id===액션.data && a.size===액션.size),1);
+    return copy;
   }
   else {
     return state

@@ -16,9 +16,7 @@ function Detail(props) {
     let { id } = useParams();
     let history = useHistory();
     let 찾은상품 = props.상품.find((a) => { return a.id == id });
-    let 찾은상품2 = props.상품.filter((a) => { return a.id == id });
-    // find 배열안의 조건에 만족하는 하나의 오브젝트를 배열로 변경  {} <<안남음
-    // filter 배열안의 조건에 만족하지 않는 오브젝트를 삭제 {} << 남음
+    
     let [누른탭,누른탭변경]=useState(0);
     let [스위치, 스위치변경]= useState(false);
   
@@ -40,13 +38,31 @@ function Detail(props) {
                     <p>{찾은상품.content}</p>
                     <p>{찾은상품.price}</p>
                     <Info 재고={props.재고} />
-
+                    <div className='mb-4'>
+                        <span>size:</span> 
+                        <select className='size-pick'>
+                            <option value= "*">- [필수] 옵션을 선택해 주세요- </option>
+                            <option value= "**">---------------------------- </option>
+                           {
+                               찾은상품.size.map((a)=>{
+                                   return(
+                                       <option value={a}>{a}</option>
+                                   )
+                               })
+                           }
+                        </select>
+                    </div>
                     <button className="btn btn-danger" onClick={() => {
                         let 차감된재고 = [...props.재고]
+                        let size = document.querySelector('.size-pick');
                         차감된재고[0] -= 1
-                        props.재고변경(차감된재고);
-                        props.dispatch({type:'항목추가',payload:{id:찾은상품.id,name:찾은상품.title,quan:1}});
-                        history.push('/cart');
+                        if (size.value>0){
+                            props.재고변경(차감된재고);
+                            props.dispatch({type:'항목추가',payload:{id:찾은상품.id,name:찾은상품.title,quan:1,size:size.value}});
+                            history.push('/cart');
+                        }
+                        
+                        
 
                     }}>주문하기</button>
                     <button className="btn btn-danger" onClick={() => {
