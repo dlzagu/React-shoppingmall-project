@@ -88,7 +88,10 @@ function App() {
   );
 }
 
-function Card(props) {
+function Card(props) { 
+  let history = useHistory();
+  let 최근본상품ID가져오기 = localStorage.getItem("id");
+  
   function 이미지누르면 (){
     history.push(history.push(`/detail/${props.상품.id}`));
     if(최근본상품ID가져오기!==null){
@@ -104,8 +107,7 @@ function Card(props) {
     
 
   }
-  let history = useHistory();
-  let 최근본상품ID가져오기 = localStorage.getItem("id");
+  
   
   return (
     <div className='col-md-4' onClick={이미지누르면}>
