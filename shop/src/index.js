@@ -16,37 +16,42 @@ function reducer2(state = alert초기값,액션){
   return state
 }
 
-let 초기값  = [
- 
-  
-];
+let 초기값  = localStorage.getItem('cart')==null? []:JSON.parse(localStorage.getItem('cart'));
 
 
 function reducer (state = 초기값, 액션){
   if(액션.type === '항목추가'){
-    let copy = [...state];
+    let copy = [...state]
+   
     if(copy.filter(a=> a.name===액션.payload.name && a.size===액션.payload.size).length){
       copy.find(a=> a.name===액션.payload.name && a.size ===액션.payload.size).quan++;
+      localStorage.setItem('cart',JSON.stringify(copy));
     }
     
-    else copy.push(액션.payload);
+    else {
+      copy.push(액션.payload);
+      localStorage.setItem('cart',JSON.stringify(copy));
+    }
     return copy;
   }
   else if(액션.type === '수량증가'){
     let copy = [...state];
     copy.find(a=> a.id===액션.data && a.size===액션.size).quan++;
+    localStorage.setItem('cart',JSON.stringify(copy));
    
     return copy
   }else if(액션.type === '수량감소'){
     let copy = [...state];
     if(copy.find(a=> a.id===액션.data && a.size===액션.size).quan>0){
       copy.find(a=> a.id===액션.data && a.size===액션.size).quan--;
+      localStorage.setItem('cart',JSON.stringify(copy));
     }
     
     return copy
   }else if(액션.type ==='삭제'){
     let copy = [...state];
     copy.splice(copy.findIndex(a=>a.id===액션.data && a.size===액션.size),1);
+    localStorage.setItem('cart',JSON.stringify(copy));
     return copy;
   }
   else {
