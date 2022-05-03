@@ -11,14 +11,23 @@ function Detail(props) {
     let [modal, modalChange] = useState(true);
     useEffect(() => {
         let 타이머 = setTimeout(() => modalChange(false), 2000);
+        var arr = localStorage.getItem('watched');
+        if(arr == null){
+            arr = []
+        }else arr = JSON.parse(arr);
+        
+        arr.push(찾은상품.id);
+        arr = new Set(arr);
+        arr = [...arr];
+        localStorage.setItem('watched', JSON.stringify(arr) );
         return () => { clearTimeout(타이머) } // 혹시 모르는 버그를 제거하기 위해 컴포넌트가 사라질때 타이머 제거 
     }, []); // [] 페이지 로드 될때 한번만 실행 
     let { id } = useParams();
     let history = useHistory();
     let 찾은상품 = props.상품.find((a) => { return a.id == id });
-    
     let [누른탭,누른탭변경]=useState(0);
     let [스위치, 스위치변경]= useState(false);
+   
   
     return (
         <div className="container">
@@ -65,11 +74,14 @@ function Detail(props) {
                         
 
                     }}>주문하기</button>
+                    
                     <button className="btn btn-danger" onClick={() => {
                         history.goBack();
                     }}>뒤로가기</button>
                 </div>
-            </div>
+             </div>
+             <RecentlyView 상품={props.상품} />
+            
                 <Nav variant="tabs" defaultActiveKey="link-0" className='mt-5'>
                     <Nav.Item>
                         <Nav.Link eventKey="link-0" onClick={()=>{스위치변경(false);누른탭변경(0)}}>Active</Nav.Link>
@@ -104,12 +116,43 @@ function TabContent(props){
         return <div>내용1</div>
       } 
 }
-function state를props화(state) {
-  return {
-    state: state.reducer,
-    alert열렸니: state.reducer2
-  }
-}
 
+
+function RecentlyView(props){
+    let recnetlyList = JSON.parse(localStorage.getItem('watched'));
+    let history = useHistory();
+    
+   return(
+    
+      <div className='row'>
+      <h4 className='mt-4'>최근 본 상품</h4>
+      
+    
+    { 
+    recnetlyList!==null
+    ?
+      recnetlyList.map((a,i)=>{
+        let 찾은이미지 = props.상품.find((Product)=>Product.id===a);
+        return(
+          <div className='col-md-4' key = {i} onClick={()=>{history.push(history.push(`/detail/${찾은이미지.id}`));}}>
+          <img src={찾은이미지.이미지주소} width="50%" />
+          </div>
+        )
+      })
+      :
+      null
+    }
+      
+  </div>
+  
+   )
+  }
+  
+  function state를props화(state) {
+    return {
+      state: state.reducer,
+      alert열렸니: state.reducer2
+    }
+  }
 
 export default connect(state를props화)(Detail);

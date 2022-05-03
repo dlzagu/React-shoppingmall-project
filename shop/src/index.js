@@ -52,7 +52,7 @@ function reducer (state = 초기값, 액션){
   else {
     return state
   }
-}
+} 
 
 let store = createStore(combineReducers({reducer,reducer2}));
 
